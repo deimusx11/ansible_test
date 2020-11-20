@@ -1,0 +1,45 @@
+    1  ls -a
+    2  cd home
+    3  pwd
+    4  cd ..
+    5  ls -a
+    6  cd home
+    7  cd nives
+    8  cd sh
+    9  ls -a
+   10  cd .ssh
+   11  ls -a
+   12  cat id_ed25519.pub
+   13  cd ..
+   14  git clone git@github.com:NivesG/ansible_tutorial.git
+   15  ssh-agent -s
+   16  git clone git@github.com:NivesG/ansible_tutorial.git
+   17  cd .ssh
+   18  ls -a
+   19  cat id_ed25519
+   20  cat id_ed25519.pub
+   21  cd ..
+   22  eval `ssh-agent`
+   23  cd .ssh
+   24  ls -a
+   25  ssh-add id_ed25519
+   26  cd ..
+   27  git@github.com:NivesG/ansible_tutorial.git
+   28  git clone git@github.com:NivesG/ansible_tutorial.git
+   29  ls -a
+   30  cd ansible_tutorial
+   31  ls -a
+   32  git config --global user.name "Nives Gabrijan"
+   33  git config --global user.name "nives.gabrijan@gmail.com"
+   34  git config --global user.name "Nives Gabrijan"
+   35  git config --global user.email "nives.gabrijan@gmail.com"
+   36  sudo nano README.md
+   37  git status
+   38  git add README.md
+   39  git commit -m "updated readme file, initial commit"
+   40  git push origin master
+   41* 
+   42  git push origin master
+   43  git show-ref
+   44  git push origin main
+   45  history >comande.txt
