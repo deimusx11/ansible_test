@@ -1,0 +1,72 @@
+---                                                                                                                                                                                 
+                                                                                                                                                                                    
+- name: Deploying NTP Service                                                                                                                                                       
+  hosts: all                                                                                                                                                                        
+  become: yes                                                                                                                                                                       
+  tasks:                                                                                                                                                                            
+          - name: Install packages on RedHat OS                                                                                                                                     
+            yum:                                                                                                                                                                    
+              name: "{{item}}"                                                                                                                                                      
+              state: present                                                                                                                                                        
+            loop:                                                                                                                                                                   
+              - ntp                                                                                                                                                                 
+              - unzip                                                                                                                                                               
+              - git                                                                                                                                                                 
+              - wget                                                                                                                                                                
+              - zip                                                                                                                                                                 
+            when: ansible_os_family == "RedHat"                                                                                                                                     
+                                                                                                                                                                                    
+          - name: Install packages on Debian OS                                                                                                                                     
+            apt:                                                                                                                                                                    
+              name: "{{item}}"                                                                                                                                                      
+              state: present                                                                                                                                                        
+            loop:                                                                                                                                                                   
+              - ntp                                                                                                                                                                 
+              - unzip                                                                                                                                                               
+              - git                                                                                                                                                                 
+              - wget                                                                                                                                                                
+              - zip                                                                                                                                                                 
+            when: ansible_os_family == "Debian"                                                                                                                                     
+                                                                                                                                                                                    
+          - name: Start and Enable NTP service in RedHat OS                                                                                                                         
+            service:                                                                                                                                                                
+              name: ntpd                                                                                                                                                            
+              state: started                                                                                                                                                        
+              enabled: yes                                                                                                                                                          
+            when: ansible_os_family == "RedHat"                                                                                                                                     
+                                                                                                                                                                                    
+          - name: Start and Enable NTP service in Debian OS                                                                                                                         
+            service:                                                                                                                                                                
+              name: ntp                                                                                                                                                             
+              state: started                                                                                                                                                        
+              enabled: yes                                                                                                                                                          
+            when: ansible_os_family == "Debian"   
+
+          - name: Deploy NTP cponfiguration for RedHat
+            template:
+              src: templates/ntp_redhat.j2
+              dest: /etc/ntp.conf
+              backup: yes
+            when: ansible_os_family == "RedHat"
+            notify: Restart NTP service in RedHat OS
+
+          - name: Deploy NTP cponfiguration for Debian
+            template:
+              src: templates/ntp_debian.j2
+              dest: /etc/ntp.conf
+              backup: yes
+            when: ansible_os_family == "Debian"
+            notify: Restart NTP service in Debian OS
+                                                                                                                         
+  handlers:
+          - name: Restart NTP service in RedHat OS
+            service:
+              name: ntpd
+              state: restarted
+            when: ansible_os_family == "RedHat"
+          - name: Restart NTP service in Debian OS
+            service:                                                                                                                                                                                                  
+              name: ntp                                                                                                                                                                                               
+              state: restarted                                                                                                                                                                                        
+            when: ansible_os_family == "Debian" 
+

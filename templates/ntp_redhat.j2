@@ -1,0 +1,9 @@
+driftfile /var/lib/ntp/drift
+restrict default kod nomodify notrap nopeer noquery
+restrict -6 default kod nomodify notrap nopeer noquery
+# the administrative functions.
+restrict 127.0.0.1 
+restrict -6 ::1
+restrict 192.0.2.0 mask 255.255.255.0 nomodify notrap nopeer
+
+server {{ ntp0 }}
